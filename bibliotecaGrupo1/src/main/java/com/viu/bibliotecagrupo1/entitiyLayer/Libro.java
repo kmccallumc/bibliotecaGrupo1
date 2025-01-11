@@ -9,13 +9,13 @@ package com.viu.bibliotecagrupo1.entitiyLayer;
  */
 public class Libro {
     private String titulo;
-    private autor elautor;
+    private Autor elautor;
     private String isbn;
     private boolean disponible;
     private String genero;
     // asumimos que por ahora el libro solo tiene un autor
     
-     public Libro(String titulo, autor elautor, String isbn, String genero) {
+     public Libro(String titulo, Autor elautor, String isbn, String genero) {
         this.titulo = titulo;
         this.elautor = elautor;
         this.isbn = isbn;
@@ -23,6 +23,14 @@ public class Libro {
         this.genero = genero;
     }
 
+     public Libro(String titulo, int elautor, String isbn, boolean disponible, String genero) {
+        this.titulo = titulo;
+        
+        this.isbn = isbn;
+        this.disponible = disponible; // los libros por defecto estan disponibles
+        this.genero = genero;
+    }
+     
     public String getTitulo() {
         return this.titulo;
     }
