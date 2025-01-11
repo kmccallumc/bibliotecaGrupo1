@@ -17,10 +17,10 @@ public class Autor {
     
     /**
      * Constructor principal de la clase Autor
-     * nombreAutor Nombre del autor
-     * apellidoAutor Apellido del autor
-     * fechaNacimiento Fecha de nacimiento del autor
-     * sexo Sexo del autor (M: masculino, F: femenino, etc)
+     * @param nombreAutor Nombre del autor
+     * @param apellidoAutor Apellido del autor
+     * @param fechaNacimiento Fecha de nacimiento del autor
+     * @param sexo Sexo del autor (M: masculino, F: femenino, etc)
      */
     public Autor(String nombreAutor, String apellidoAutor, Date fechaNacimiento, String sexo) {
         this.nombreAutor = nombreAutor;
@@ -31,12 +31,12 @@ public class Autor {
     
     /**
      * Constructor completo de la clase Autor
-     * nombreAutor Nombre del autor
-     * apellidoAutor Apellido del autor
-     * fechaNacimiento Fecha de nacimiento del autor
-     * sexo Sexo del autor
-     * nacionalidad Nacionalidad del autor
-     * biografia Breve biografía del autor
+     * @param nombreAutor Nombre del autor
+     * @param apellidoAutor Apellido del autor
+     * @param fechaNacimiento Fecha de nacimiento del autor
+     * @param sexo Sexo del autor
+     * @param nacionalidad Nacionalidad del autor
+     * @param biografia Breve biografía del autor
      */
     public Autor(String nombreAutor, String apellidoAutor, Date fechaNacimiento, 
                 String sexo, String nacionalidad, String biografia) {
@@ -96,7 +96,7 @@ public class Autor {
     
     /**
      * Obtiene el nombre completo del autor
-     * return String con el nombre y apellido del autor
+     * @return String con el nombre y apellido del autor
      */
     public String getNombreCompleto() {
         return this.nombreAutor + " " + this.apellidoAutor;
@@ -104,7 +104,7 @@ public class Autor {
     
     /**
      * Verifica si los datos básicos del autor están completos
-     * return true si todos los campos básicos están completos, false en caso contrario
+     * @return true si todos los campos básicos están completos, false en caso contrario
      */
     public boolean datosCompletos() {
         return nombreAutor != null && !nombreAutor.trim().isEmpty() &&
