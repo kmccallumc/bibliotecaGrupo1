@@ -1,25 +1,29 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.viu.bibliotecagrupo1.entitiyLayer;
 
 /**
+ * Clase que representa un libro en el sistema de biblioteca.
  * @author kmccallum <Kathleen_McCallum VIU>
  */
-public class libro {
+public class Libro {
     private String titulo;
-    private autor elautor;
+    private Autor autor;
     private String isbn;
     private boolean disponible;
     private String genero;
-    // asumimos que por ahora el libro solo tiene un autor
     
-     public libro(String titulo, autor elautor, String isbn, String genero) {
+    public Libro(String titulo, Autor autor, String isbn, String genero) {
         this.titulo = titulo;
-        this.elautor = elautor;
+        this.autor = autor;
         this.isbn = isbn;
-        this.disponible = true; // los libros por defecto estan disponibles
+        this.disponible = true; // Los libros por defecto están disponibles
+        this.genero = genero;
+    }
+    
+    public Libro(String titulo, Autor autor, String isbn, String genero, boolean disponible) {
+        this.titulo = titulo;
+        this.autor = autor;
+        this.isbn = isbn;
+        this.disponible = disponible;
         this.genero = genero;
     }
 
@@ -31,33 +35,60 @@ public class libro {
         this.titulo = titulo;
     }
     
-    public autor getAutor() {
-        return this.elautor;
+    public Autor getAutor() {
+        return this.autor;
     }
-    public void setAutor(autor elautor){
-        this.elautor = elautor;
+    
+    public void setAutor(Autor autor) {
+        this.autor = autor;
     }
-
+    
     public String getIsbn() {
         return this.isbn;
     }
-
-    public void setIsbn(String isbn){
+    
+    public void setIsbn(String isbn) {
         this.isbn = isbn;
     }
-    public boolean getDisponible() {
-        return disponible;
+    
+    public boolean isDisponible() {
+        return this.disponible;
     }
-
+    
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
     
-     public String getGenero() {
+    public String getGenero() {
         return this.genero;
     }
     
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+    
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "titulo='" + titulo + '\'' +
+                ", autor=" + autor +
+                ", isbn='" + isbn + '\'' +
+                ", disponible=" + disponible +
+                ", genero='" + genero + '\'' +
+                '}';
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        
+        Libro libro = (Libro) obj;
+        return isbn.equals(libro.isbn);
+    }
+    
+    @Override
+    public int hashCode() {
+        return isbn.hashCode();
     }
 }
