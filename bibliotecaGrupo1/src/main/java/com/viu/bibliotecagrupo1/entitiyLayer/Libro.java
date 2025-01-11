@@ -39,10 +39,10 @@ public class Libro {
         this.titulo = titulo;
     }
     
-    public autor getAutor() {
+    public Autor getAutor() {
         return this.elautor;
     }
-    public void setAutor(autor elautor){
+    public void setAutor(Autor elautor){
         this.elautor = elautor;
     }
 
