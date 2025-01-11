@@ -6,6 +6,7 @@ import java.util.Objects;
 /**
  * Clase que representa a un autor de libros en el sistema de biblioteca
  * @author kmccallum <Kathleen_McCallum VIU>
+ * 
  */
 public class Autor {
     private String nombreAutor;
