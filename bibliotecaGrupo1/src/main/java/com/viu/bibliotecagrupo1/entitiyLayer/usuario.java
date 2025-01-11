@@ -35,3 +35,4 @@ public class Usuario {
         this.activo = true;
         this.numeroPrestamosPendientes = 0;
     }
+}
