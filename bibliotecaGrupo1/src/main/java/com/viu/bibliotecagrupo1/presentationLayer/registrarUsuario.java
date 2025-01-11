@@ -5,7 +5,7 @@
 package com.viu.bibliotecagrupo1.presentationLayer;
 
 import com.viu.bibliotecagrupo1.entitiyLayer.Usuario;
-import com.viu.bibliotecagrupo1.businessLayer.GestionUsuarios;
+//import com.viu.bibliotecagrupo1.businessLayer.GestionUsuarios;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -13,15 +13,15 @@ import java.util.regex.Pattern;
  * Clase que maneja la interfaz de registro de usuarios
  * @author kmccallum <Kathleen_McCallum VIU>
  */
-public class RegistrarUsuario {
-    private final GestionUsuarios gestionUsuarios;
+public class registrarUsuario {
+    //private final GestionUsuarios gestionUsuarios;
     private final Scanner scanner;
     
     /**
      * Constructor de la clase
      */
-    public RegistrarUsuario() {
-        this.gestionUsuarios = new GestionUsuarios();
+    public registrarUsuario() {
+        //this.gestionUsuarios = new GestionUsuarios();
         this.scanner = new Scanner(System.in);
     }
     
@@ -30,8 +30,9 @@ public class RegistrarUsuario {
      */
     public void iniciarRegistro() {
         System.out.println("\n=== Registro de Nuevo Usuario ===");
-        
-        try {
+      
+        // KMC : he comentado el codigo para poder compilar
+    /*    try {
             // Recoger datos obligatorios
             String nombre = solicitarDato("Nombre");
             String apellidos = solicitarDato("Apellidos");
@@ -51,4 +52,8 @@ public class RegistrarUsuario {
                 email,
                 telefono,
                 direccion
-            );
+            )catch
+                    
+      */
+    }
+}
