@@ -8,6 +8,7 @@ package com.viu.bibliotecagrupo1.resources;
 
 import java.sql.*;
 import com.viu.bibliotecagrupo1.entitiyLayer.Libro;
+import com.viu.bibliotecagrupo1.entitiyLayer.Autor;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -52,7 +53,10 @@ public class DBClient {
                 boolean disponible = rs.getBoolean("autor_id"); // los libros por defecto estan disponibles
                 String genero = rs.getString("genero");
                 
-                Libro lib = new Libro(titulo, elautor, isbn, disponible, genero);
+                // aqui falta hacer un get del autor, y rellenar el objeto
+                Autor aut;
+                        
+                Libro lib = new Libro(titulo, aut, isbn, genero, disponible);
                 listalibros.add(lib);
             }
             
