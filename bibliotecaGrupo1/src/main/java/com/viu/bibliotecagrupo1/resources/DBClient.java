@@ -76,7 +76,7 @@ public class DBClient {
                 String genero = rs.getString("genero");
                 
                 // Traigo el autor, que solo tengo su id
-                String queryAutor = "select * from autor where autor_id = " + elautor;
+                String queryAutor = "select * from Autor where autor_id = " + elautor;
                 Autor aut = this.selectAutor(queryAutor);
                         
                 Libro lib = new Libro(titulo, aut, isbn, genero, disponible);
@@ -107,7 +107,7 @@ public class DBClient {
                 String apellidoautor = rs.getString("apellidoAutor");
                 String  sexo = rs.getString("sexo");
                 Date fechanacimiento = rs.getDate("fechaNacimiento");
-                String nacionalidad = rs.getString("nacionalidad");
+                String nacionalidad = rs.getString("nationality");
                 String biografia = rs.getString("biografia");
                 
                 // aqui falta hacer un get del autor, y rellenar el objeto
