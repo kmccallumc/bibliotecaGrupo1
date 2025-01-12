@@ -14,6 +14,7 @@ public class Autor {
     private String sexo;
     private String nacionalidad;
     private String biografia;
+    private int autorid;
     
     /**
      * Constructor principal de la clase Autor
@@ -22,11 +23,12 @@ public class Autor {
      * @param fechaNacimiento Fecha de nacimiento del autor
      * @param sexo Sexo del autor (M: masculino, F: femenino, etc)
      */
-    public Autor(String nombreAutor, String apellidoAutor, Date fechaNacimiento, String sexo) {
+    public Autor(String nombreAutor, String apellidoAutor, Date fechaNacimiento, String sexo, int autorid) {
         this.nombreAutor = nombreAutor;
         this.apellidoAutor = apellidoAutor;
         this.fechaNacimiento = fechaNacimiento;
         this.sexo = sexo;
+        this.autorid = autorid;
     }
     
     /**
@@ -39,8 +41,8 @@ public class Autor {
      * @param biografia Breve biografía del autor
      */
     public Autor(String nombreAutor, String apellidoAutor, Date fechaNacimiento, 
-                String sexo, String nacionalidad, String biografia) {
-        this(nombreAutor, apellidoAutor, fechaNacimiento, sexo);
+                String sexo, String nacionalidad, String biografia, int autorid) {
+        this(nombreAutor, apellidoAutor, fechaNacimiento, sexo, autorid);
         this.nacionalidad = nacionalidad;
         this.biografia = biografia;
     }
@@ -93,6 +95,15 @@ public class Autor {
     public void setBiografia(String biografia) {
         this.biografia = biografia;
     }
+    
+    public int getAutorid() {
+        return this.autorid;
+    }
+    
+    public void setAutorid(int autorid) {
+        this.autorid = autorid;
+    }
+    
     
     /**
      * Obtiene el nombre completo del autor

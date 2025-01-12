@@ -111,7 +111,7 @@ public class DBClient {
                 String biografia = rs.getString("biografia");
                 
                 // aqui falta hacer un get del autor, y rellenar el objeto
-                aut = new Autor (nombreautor,apellidoautor,fechanacimiento,sexo,nacionalidad,biografia); //, autorid);
+                aut = new Autor (nombreautor,apellidoautor,fechanacimiento,sexo,nacionalidad,biografia, autorid); //, autorid);
             }
             
          }catch (SQLException  e) {
