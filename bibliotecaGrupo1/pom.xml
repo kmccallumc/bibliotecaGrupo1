@@ -13,11 +13,12 @@
         <exec.mainClass>com.viu.bibliotecagrupo1.BibliotecaGrupo1</exec.mainClass>
     </properties>
     
-    <build>
+<!--    <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.9.9</version>
                 <configuration>
                     <archive>
                         <manifestEntries>
@@ -28,15 +29,32 @@
             </plugin>
         </plugins>
     </build>
-    
-    <dependencyManagement>
+  -->  
+  <!--  <dependencyManagement> -->
         <dependencies>
-            <dependency>
+                    <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.protobuf</groupId>
+                    <artifactId>protobuf-java</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+  <!--          <dependency>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
                 <version>3.9.9</version>
                 <type>maven-plugin</type>
-          </dependency>
+          </dependency> -->
+        
+          <dependency>
+                <groupId>software.amazon.jdbc</groupId>
+                <artifactId>aws-advanced-jdbc-wrapper</artifactId>
+                <version>2.5.4</version>
+                <type>jar</type>
+            </dependency>
             <dependency>
               <groupId>software.amazon.awssdk</groupId>
               <artifactId>rdsdata</artifactId>
@@ -54,11 +72,11 @@
            <dependency>
                <groupId>mysql</groupId>
                <artifactId>mysql-connector-java</artifactId>
-               <version>8.0.29</version>
-               <type>pom</type>
-               <scope>import</scope>
+               <version>8.0.30</version>
+               <!--<type>pom</type>
+               <scope>import</scope>-->
            </dependency>
         </dependencies>
-    </dependencyManagement>
+   <!-- </dependencyManagement>-->
 
 </project>
