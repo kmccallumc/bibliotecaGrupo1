@@ -79,8 +79,8 @@ public class DBClient {
                 String queryAutor = "select * from autor where autor_id = " + elautor;
                 Autor aut = this.selectAutor(queryAutor);
                         
-                //Libro lib = new Libro(titulo, aut, isbn, genero, disponible);
-                //listalibros.add(lib);
+                Libro lib = new Libro(titulo, aut, isbn, genero, disponible);
+                listalibros.add(lib);
             }
             
          }catch (SQLException  e) {
@@ -111,7 +111,7 @@ public class DBClient {
                 String biografia = rs.getString("biografia");
                 
                 // aqui falta hacer un get del autor, y rellenar el objeto
-                //aut = new Autor (nombreautor,apellidoautor,fechanacimiento,sexo,nacionalidad,biografia, autorid);
+                aut = new Autor (nombreautor,apellidoautor,fechanacimiento,sexo,nacionalidad,biografia); //, autorid);
             }
             
          }catch (SQLException  e) {
