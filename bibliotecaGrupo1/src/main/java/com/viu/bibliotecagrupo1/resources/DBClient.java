@@ -123,6 +123,24 @@ public class DBClient {
         }
         return isOK;
     }
+     
+    public boolean deleteLibro(int libroid){
+        inicializaDS();
+        boolean isOK = false;
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            String sql = "DELETE from libro where libro_id = ?";
+            
+            PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
+            preparedStmt.setInt(1, libroid);
+            preparedStmt.execute();
+            isOK = true;
+            
+         }catch (SQLException  e) {
+                e.printStackTrace();
+        }
+        return isOK;
+    }
         
     public List selectLibroTitulo(String Titulo){
         // el titulo puede devolver valios libros               
