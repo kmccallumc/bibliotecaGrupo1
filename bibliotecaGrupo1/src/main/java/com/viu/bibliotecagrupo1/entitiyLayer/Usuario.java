@@ -35,4 +35,62 @@ public class Usuario {
         this.activo = true;
         this.numeroPrestamosPendientes = 0;
     }
+
+ // Getters y Setters
+    public String getNombre() {
+        return this.nombre;
+    }
+    
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    
+    public String getApellidos() {
+        return this.apellidos;
+    }
+    
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+   public String getDNI() {
+        return this.dni;
+    }
+    
+    public void setDNI(String dni) {
+        this.dni = dni;
+    }   
+    
+    public String getEmail() {
+        return this.email;
+    }
+    
+    public void setEmail(String email) {
+        this.email = email;
+    }   
+    
+    public Date getFechanAlta() {
+        return this.fechaAlta;
+    }
+    
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }   
+    
+    public boolean getActivo() {
+        return this.activo;
+    }
+    
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
+    public int getNumeroPrestamosPendientes() {
+        return this.numeroPrestamosPendientes;
+    }
+    
+    public void setNumeroPrestamosPendientes(int numeroPrestamosPendientes) {
+        this.numeroPrestamosPendientes = numeroPrestamosPendientes;
+    }
+
 }
