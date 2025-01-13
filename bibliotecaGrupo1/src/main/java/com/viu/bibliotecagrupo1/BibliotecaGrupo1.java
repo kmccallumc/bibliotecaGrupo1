@@ -16,12 +16,15 @@ public class BibliotecaGrupo1 {
 
     public static void main(String[] args) {
         System.out.println("Hello World!");
-        List listalibros;
+        List listalibros, listaAutores;
         
         try{
             DBClient conec = new DBClient();
             
-            listalibros = conec.selectLibros("select * from libro");
+            listaAutores = conec.selectAllAutores();
+            listaAutores.forEach(System.out::println);
+            
+            listalibros = conec.selectAllLibros();
             listalibros.forEach(System.out::println);
             
         }catch(Exception e){

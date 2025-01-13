@@ -10,6 +10,7 @@ public class Libro {
     private String isbn;
     private boolean disponible;
     private String genero;
+    private int autorid;
     
     public Libro(String titulo, Autor autor, String isbn, String genero) {
         this.titulo = titulo;
