@@ -20,20 +20,20 @@ public class Usuario {
     private String telefono;
     private String direccion;
     private Date fechaAlta;
-    private boolean activo;
-    private int numeroPrestamosPendientes;
+    private int activo;
+    private int numeroPrestamos;
     private static final int MAX_PRESTAMOS = 3;
 
     /* no se cuanto poner de max de prestamo?? 3? 4?     */
-    public Usuario(int id, String nombre, String apellidos, String dni, String email) {
+    public Usuario(int id, String nombre, String apellidos, String dni, String email, String telefono, String direccion, Date fechaAlta, int activo, int numeroPrestamos) {
         this.id = id;
         this.nombre = nombre;
         this.apellidos = apellidos;
         this.dni = dni;
         this.email = email;
         this.fechaAlta = new Date();
-        this.activo = true;
-        this.numeroPrestamosPendientes = 0;
+        this.activo = 1; //1:True, 0:False
+        this.numeroPrestamos = 0;
     }
 
  // Getters y Setters
@@ -69,7 +69,22 @@ public class Usuario {
         this.email = email;
     }   
     
-    public Date getFechanAlta() {
+    public String getTelefono() {
+        return this.telefono;
+    }
+    
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }   
+    
+     public String getDireccion() {
+        return this.direccion;
+    }
+    
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }      
+    public Date getFechaAlta() {
         return this.fechaAlta;
     }
     
@@ -77,20 +92,20 @@ public class Usuario {
         this.fechaAlta = fechaAlta;
     }   
     
-    public boolean getActivo() {
+    public int getActivo() {
         return this.activo;
     }
     
-    public void setActivo(boolean activo) {
+    public void setActivo(int activo) {
         this.activo = activo;
     }
     
-    public int getNumeroPrestamosPendientes() {
-        return this.numeroPrestamosPendientes;
+    public int getNumeroPrestamos() {
+        return this.numeroPrestamos;
     }
     
-    public void setNumeroPrestamosPendientes(int numeroPrestamosPendientes) {
-        this.numeroPrestamosPendientes = numeroPrestamosPendientes;
+    public void setNumeroPrestamos(int numeroPrestamos) {
+        this.numeroPrestamos = numeroPrestamos;
     }
 
 }

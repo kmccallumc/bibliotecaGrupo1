@@ -17,6 +17,7 @@ import java.sql.Date;
 
 import com.viu.bibliotecagrupo1.entitiyLayer.Libro;
 import com.viu.bibliotecagrupo1.entitiyLayer.Autor;
+import com.viu.bibliotecagrupo1.entitiyLayer.Usuario;
 import java.util.List;
 import java.util.ArrayList;
 import software.amazon.jdbc.ds.AwsWrapperDataSource;
@@ -203,6 +204,139 @@ public class DBClient {
     }
     
      /* ******************************************************
+      * Usuario
+      * ****************************************************** */
+    public boolean InsertUsuario(Usuario usu){
+        inicializaDS();
+        boolean isOK = false;
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            String sql = "INSERT INTO Usuario (nombre, apellidos, dni, email, telefono, direccion, fechaAlta, activo, numeroPrestamos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    
+            PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
+            preparedStmt.setString (1, usu.getNombre());
+            preparedStmt.setString (2, usu.getApellidos());
+            preparedStmt.setString (3, usu.getDNI());
+            preparedStmt.setString (4, usu.getEmail());
+            preparedStmt.setString (5, usu.getTelefono());
+            preparedStmt.setString (6, usu.getDireccion());
+            preparedStmt.setDate (7, new java.sql.Date(usu.getFechaAlta().getTime()));
+            preparedStmt.setInt(8, usu.getActivo());
+            preparedStmt.setInt(9, usu.getNumeroPrestamos());
+            
+            preparedStmt.execute();
+            isOK = true;
+            
+         }catch (SQLException  e) {
+                e.printStackTrace();
+        }
+        return isOK;
+    }
+    
+        public boolean updateUsuario(Usuario usu){
+        inicializaDS();
+        boolean isOK = false;
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            String sql = "UPDATE Usuario set nombre = ?, apellidos= ?, dni= ?, email= ?, telefono=?, direccion = ?, fechaAlta = ? , activo= ?, numeroPrestamos=? where usuario_id = ?";
+    
+            PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
+            preparedStmt.setString (1, usu.getNombre());
+            preparedStmt.setString (2, usu.getApellidos());
+            preparedStmt.setString (3, usu.getDNI());
+            preparedStmt.setString (4, usu.getEmail());
+            preparedStmt.setString (5, usu.getTelefono());
+            preparedStmt.setString (6, usu.getDireccion());
+            preparedStmt.setDate (7, new java.sql.Date(usu.getFechaAlta().getTime()));
+            preparedStmt.setInt(8, usu.getActivo());
+            preparedStmt.setInt(9, usu.getNumeroPrestamos());
+            
+            preparedStmt.execute();
+            isOK = true;
+            
+         }catch (SQLException  e) {
+                e.printStackTrace();
+        }
+        return isOK;
+    }
+     
+    public boolean deleteUsuario(int usuarioid){
+        inicializaDS();
+        boolean isOK = false;
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            String sql = "DELETE from Usuario where usuario_id = ?";
+            
+            PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
+            preparedStmt.setInt(1, usuarioid);
+            preparedStmt.execute();
+            isOK = true;
+            
+         }catch (SQLException  e) {
+                e.printStackTrace();
+        }
+        return isOK;
+    }
+    
+    public Usuario selectUsuarioDNI(String dni){
+        // el dni es unico
+        String sql = "select * from usuario where dni = '" + dni + "'";
+        List listaUsuarios = selectGenericoUsuario(sql);
+        Usuario usu = (Usuario)listaUsuarios.getFirst();
+        return usu;
+    }      
+
+    public Usuario selectUsuarioEmail(String email){
+        // el email deberia ser unico, asi que traigo el primero
+        String sql = "select * from libro where email = " + email + "'";
+        List listaUsuarios = selectGenericoUsuario(sql);
+        Usuario usu = (Usuario)listaUsuarios.getFirst();       
+        return usu;
+    }      
+    
+    private List selectGenericoUsuario(String sql){
+        Usuario usu=null; 
+        List listaUsuarios = new ArrayList(); 
+        String nombre, apellidos, dni, email, telefono, direccion;
+        Date fechaAlta;
+        int usuarioid, activo, numeroPrestamos;
+        
+        inicializaDS();
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            Statement selecta = connBiblio.createStatement();           
+            ResultSet rs = selecta.executeQuery(sql);  
+            
+           while (rs.next()) {
+                // Retrieve by column name 
+                usuarioid = rs.getInt("usuario_id");
+                nombre = rs.getString("nombre");
+                apellidos = rs.getString("apellidos");
+                dni = rs.getString("dni");
+                email = rs.getString("email");
+                telefono = rs.getString("telefono");
+                direccion = rs.getString("direccion");
+                fechaAlta = rs.getDate("fechaAlta");
+                activo = rs.getInt("activo");
+                numeroPrestamos = rs.getInt("numeroPrestamos"); // los libros por defecto estan disponibles
+                
+                // KMC : no se si esta bien ponerlo aqui... el objeto... pero bueno, solo por ahora
+                //Autor aut = this.selectAutorById(elautor);                       
+                usu = new Usuario(usuarioid, nombre, apellidos, dni, email, telefono, direccion, fechaAlta, activo, numeroPrestamos);
+                listaUsuarios.add(usu);               
+            }
+            
+         }catch (SQLException  e) {
+             System.out.println(e.getErrorCode());
+             System.out.println(e.getLocalizedMessage() );
+                e.printStackTrace();
+         }        
+        return listaUsuarios;
+    }
+    
+    
+    
+     /* ******************************************************
       * Autor
       * ****************************************************** */
     public boolean InsertAutor(Autor aut){
@@ -249,7 +383,7 @@ public class DBClient {
                 String nacionalidad = rs.getString("nationality");
                 String biografia = rs.getString("biografia");
                 
-                aut = new Autor (nombreautor,apellidoautor,fechanacimiento,sexo,nacionalidad,biografia, autorid);
+                aut = new Autor (nombreautor,apellidoautor,new java.util.Date(fechanacimiento.getTime()),sexo,nacionalidad,biografia, autorid);
             }
             
          }catch (SQLException  e) {
@@ -296,5 +430,4 @@ public class DBClient {
         return listaAutores;
     }
  
-    
 }
