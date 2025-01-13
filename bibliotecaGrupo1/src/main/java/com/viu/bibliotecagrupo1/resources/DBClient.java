@@ -79,7 +79,7 @@ public class DBClient {
      * Libro
      * ****************************************************** */
     public boolean InsertLibro(Libro lib){
-        //inicializaDS();
+        inicializaDS();
         boolean isOK = false;
         try {
             connBiblio = ds.getConnection(USERDB, PASSDB);
@@ -105,7 +105,7 @@ public class DBClient {
         List listalibros = new ArrayList();
         String querySelect = "select * from libro";
         
-        //inicializaDS();
+        inicializaDS();
         try {
             connBiblio = ds.getConnection(USERDB, PASSDB);
             Statement insertaQ = connBiblio.createStatement();
@@ -140,7 +140,7 @@ public class DBClient {
       * Autor
       * ****************************************************** */
     public boolean InsertAutor(Autor aut){
-        //inicializaDS();
+        inicializaDS();
         boolean isOK = false;
         try {
             connBiblio = ds.getConnection(USERDB, PASSDB);
@@ -164,9 +164,8 @@ public class DBClient {
     }
     
     public Autor selectAutorById(int elautorid){
-         //List elautor = new ArrayList();
         Autor aut=null; 
-        //inicializaDS();
+        inicializaDS();
         try {
             connBiblio = ds.getConnection(USERDB, PASSDB);
             Statement selecta = connBiblio.createStatement();
@@ -184,8 +183,7 @@ public class DBClient {
                 String nacionalidad = rs.getString("nationality");
                 String biografia = rs.getString("biografia");
                 
-                // aqui falta hacer un get del autor, y rellenar el objeto
-                aut = new Autor (nombreautor,apellidoautor,fechanacimiento,sexo,nacionalidad,biografia, autorid); //, autorid);
+                aut = new Autor (nombreautor,apellidoautor,fechanacimiento,sexo,nacionalidad,biografia, autorid);
             }
             
          }catch (SQLException  e) {
