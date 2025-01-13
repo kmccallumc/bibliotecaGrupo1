@@ -78,7 +78,7 @@ public class DBClient {
     /* ******************************************************
      * Libro
      * ****************************************************** */
-    public boolean InsertLibro(Libro lib){
+    public boolean insertLibro(Libro lib){
         inicializaDS();
         boolean isOK = false;
         try {
@@ -100,42 +100,90 @@ public class DBClient {
         }
         return isOK;
     }
+
+        public boolean updateLibro(Libro lib){
+        inicializaDS();
+        boolean isOK = false;
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            String sql = "UPDATE libro set titulo = ?, autor_id = ?, isbn = ?, disponible = ?, genero= ? where libro_id = ?";
+    
+            PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
+            preparedStmt.setString (1, lib.getTitulo());
+            preparedStmt.setInt (2, lib.getAutor().getAutorid());
+            preparedStmt.setString (3, lib.getIsbn());
+            preparedStmt.setBoolean(4, lib.isDisponible());
+            preparedStmt.setString(5, lib.getGenero());
+            preparedStmt.setInt(6, lib.getLibroId());
+            preparedStmt.execute();
+            isOK = true;
+            
+         }catch (SQLException  e) {
+                e.printStackTrace();
+        }
+        return isOK;
+    }
+        
+    public List selectLibroTitulo(String Titulo){
+        // el titulo puede devolver valios libros               
+        String sql = "select * from libro where titulo = '" + Titulo + "'";
+        return selectGenericoLibro(sql);
+    }      
+
+    public List selectLibroAutor(int Autorid){
+        // el autor puede devolver valios libros
+        String sql = "select * from libro where autor_id = " + Autorid;
+        return selectGenericoLibro(sql);
+    }      
+
+    public List selectLibroISBN(String ISBN){
+        // el ISBN puede devolver valios libros ???? o solo 1        
+        String sql = "select * from libro where titulo = '" + ISBN + "'";
+        return selectGenericoLibro(sql);
+    }      
     
      public List selectAllLibros(){
-        List listalibros = new ArrayList();
+        // devuelve todos los libros
         String querySelect = "select * from libro";
+        return selectGenericoLibro(querySelect);
+    }
+    
+      private List selectGenericoLibro(String sql){
+        Libro lib=null; 
+        List listalibros = new ArrayList(); 
+        String titulo, isbn, genero;
+        int elautor, libroid;
+        boolean disponible;
         
         inicializaDS();
         try {
             connBiblio = ds.getConnection(USERDB, PASSDB);
-            Statement insertaQ = connBiblio.createStatement();
-            ResultSet rs = insertaQ.executeQuery(querySelect);
+            Statement selecta = connBiblio.createStatement();           
+            ResultSet rs = selecta.executeQuery(sql);  
             
            while (rs.next()) {
                 // Retrieve by column name 
-                String titulo = rs.getString("titulo");
-                int elautor = rs.getInt("autor_id");
-                String  isbn = rs.getString("titulo");
-                boolean disponible = rs.getBoolean("autor_id"); // los libros por defecto estan disponibles
-                String genero = rs.getString("genero");
+                libroid = rs.getInt("libro_id");
+                titulo = rs.getString("titulo");
+                elautor = rs.getInt("autor_id");
+                isbn = rs.getString("titulo");
+                disponible = rs.getBoolean("autor_id"); // los libros por defecto estan disponibles
+                genero = rs.getString("genero");
                 
                 // KMC : no se si esta bien ponerlo aqui... el objeto... pero bueno, solo por ahora
-                Autor aut = this.selectAutorById(elautor);
-                        
-                Libro lib = new Libro(titulo, aut, isbn, genero, disponible);
-                listalibros.add(lib);
+                //Autor aut = this.selectAutorById(elautor);                       
+                lib = new Libro(libroid, titulo, isbn, genero, disponible, elautor);
+                listalibros.add(lib);               
             }
             
          }catch (SQLException  e) {
              System.out.println(e.getErrorCode());
              System.out.println(e.getLocalizedMessage() );
                 e.printStackTrace();
-         }
-        
+         }        
         return listalibros;
     }
     
-  
      /* ******************************************************
       * Autor
       * ****************************************************** */

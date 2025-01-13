@@ -10,7 +10,8 @@ public class Libro {
     private String isbn;
     private boolean disponible;
     private String genero;
-    private int autorid;
+    private int autorid; // cuando recupero de BD solo tengo el id del autor, no el objeto
+    private int libroid;
     
     public Libro(String titulo, Autor autor, String isbn, String genero) {
         this.titulo = titulo;
@@ -20,14 +21,25 @@ public class Libro {
         this.genero = genero;
     }
     
-    public Libro(String titulo, Autor autor, String isbn, String genero, boolean disponible) {
+    // cuando traigo la informacion de bd, no tengo el objeto autor, lo cargo aqui
+    public Libro(int libroid, String titulo, String isbn, String genero, boolean disponible, int autorid) {
+        this.libroid = libroid;
         this.titulo = titulo;
-        this.autor = autor;
+        //this.autor = autor;  -- autor lo completo con el set
         this.isbn = isbn;
         this.disponible = disponible;
         this.genero = genero;
+        this.autorid = autorid;
     }
 
+    public int getLibroId() {
+        return this.libroid;
+    }
+    
+    public void setLibroId(int libroid) {
+        this.libroid = libroid;
+    }
+    
     public String getTitulo() {
         return this.titulo;
     }
@@ -66,6 +78,14 @@ public class Libro {
     
     public void setGenero(String genero) {
         this.genero = genero;
+    }
+    
+    public int getAutorId() {
+        return this.autorid;
+    }
+    
+    public void setAutorId(int autorid) {
+        this.autorid = autorid;
     }
     
     @Override
