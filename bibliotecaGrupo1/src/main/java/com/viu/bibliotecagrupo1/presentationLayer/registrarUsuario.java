@@ -4,6 +4,11 @@ import com.viu.bibliotecagrupo1.entitiyLayer.Usuario;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
+/**
+ * Clase que representa a un autor de libros en el sistema de biblioteca
+ * @author kmccallum <Kathleen_McCallum VIU>
+ */
+
 public class registrarUsuario {
     private final Scanner scanner;
     private static int ultimoId = 0;
