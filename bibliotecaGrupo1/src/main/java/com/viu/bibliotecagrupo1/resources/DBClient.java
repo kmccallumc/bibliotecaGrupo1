@@ -176,6 +176,7 @@ public class DBClient {
         
         inicializaDS();
         try {
+            System.out.println("The query: " + sql);
             connBiblio = ds.getConnection(USERDB, PASSDB);
             Statement selecta = connBiblio.createStatement();           
             ResultSet rs = selecta.executeQuery(sql);  
@@ -188,9 +189,7 @@ public class DBClient {
                 isbn = rs.getString("titulo");
                 disponible = rs.getBoolean("autor_id"); // los libros por defecto estan disponibles
                 genero = rs.getString("genero");
-                
-                // KMC : no se si esta bien ponerlo aqui... el objeto... pero bueno, solo por ahora
-                //Autor aut = this.selectAutorById(elautor);                       
+                                 
                 lib = new Libro(libroid, titulo, isbn, genero, disponible, elautor);
                 listalibros.add(lib);               
             }
@@ -393,6 +392,42 @@ public class DBClient {
          }
         
         return aut;
+    }
+    
+       public List selectAutorByNombre(String nombreAutor){
+        Autor aut=null; 
+        List listaAutores = new ArrayList();
+        inicializaDS();
+        
+        
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            Statement selecta = connBiblio.createStatement();
+            // Traigo el autor, que solo tengo su id
+            String sql = "select * from Autor where upper(nombreAutor) = '" + nombreAutor.toUpperCase() + "'";
+            ResultSet rs = selecta.executeQuery(sql);
+            
+           while (rs.next()) {
+                // Retrieve by column name 
+                int autorid = rs.getInt("autor_id");
+                String nombreautor = rs.getString("nombreAutor");
+                String apellidoautor = rs.getString("apellidoAutor");
+                String  sexo = rs.getString("sexo");
+                Date fechanacimiento = rs.getDate("fechaNacimiento");
+                String nacionalidad = rs.getString("nationality");
+                String biografia = rs.getString("biografia");
+                
+                aut = new Autor (nombreautor,apellidoautor,new java.util.Date(fechanacimiento.getTime()),sexo,nacionalidad,biografia, autorid);
+                listaAutores.add(aut);
+            }
+            
+         }catch (SQLException  e) {
+             System.out.println(e.getErrorCode());
+             System.out.println(e.getLocalizedMessage() );
+                e.printStackTrace();
+         }
+        
+        return listaAutores;
     }
    
      public List selectAllAutores(){

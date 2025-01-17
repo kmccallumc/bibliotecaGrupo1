@@ -37,6 +37,15 @@ public class Usuario {
     }
 
  // Getters y Setters
+    
+    public int getId() {
+        return this.id;
+    }
+    
+    public void setId(int id) {
+        this.id = id;
+    }
+    
     public String getNombre() {
         return this.nombre;
     }

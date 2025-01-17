@@ -13,12 +13,8 @@ public class Libro {
     private int autorid; // cuando recupero de BD solo tengo el id del autor, no el objeto
     private int libroid;
     
-    public Libro(String titulo, Autor autor, String isbn, String genero) {
-        this.titulo = titulo;
-        this.autor = autor;
-        this.isbn = isbn;
-        this.disponible = true; // Los libros por defecto están disponibles
-        this.genero = genero;
+    public Libro() {
+ 
     }
     
     // cuando traigo la informacion de bd, no tengo el objeto autor, lo cargo aqui

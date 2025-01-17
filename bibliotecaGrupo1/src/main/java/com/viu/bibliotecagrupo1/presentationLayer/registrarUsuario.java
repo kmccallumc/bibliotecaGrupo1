@@ -3,6 +3,7 @@ package com.viu.bibliotecagrupo1.presentationLayer;
 import com.viu.bibliotecagrupo1.entitiyLayer.Usuario;
 import java.util.Scanner;
 import java.util.regex.Pattern;
+import java.util.Date;
 
 /**
  * Clase que representa a un autor de libros en el sistema de biblioteca
@@ -32,15 +33,7 @@ public class registrarUsuario {
             String direccion = solicitarDatoOpcional("Dirección");
             
             // Crear el usuario
-            Usuario nuevoUsuario = new Usuario(
-                generarNuevoId(),
-                nombre,
-                apellidos,
-                dni,
-                email,
-                telefono,
-                direccion
-            );
+            Usuario nuevoUsuario = new Usuario(0,nombre,apellidos,dni,email,telefono,direccion, new Date(), 1,0);
             
             // Mostrar resumen del registro
             mostrarResumenRegistro(nuevoUsuario);
@@ -108,16 +101,12 @@ public class registrarUsuario {
         return email;
     }
     
-    private int generarNuevoId() {
-        return ++ultimoId;
-    }
-    
     private void mostrarResumenRegistro(Usuario usuario) {
         System.out.println("\n=== Resumen del Registro ===");
         System.out.println("ID: " + usuario.getId());
         System.out.println("Nombre: " + usuario.getNombre());
         System.out.println("Apellidos: " + usuario.getApellidos());
-        System.out.println("DNI: " + usuario.getDni());
+        System.out.println("DNI: " + usuario.getDNI());
         System.out.println("Email: " + usuario.getEmail());
         System.out.println("Teléfono: " + (usuario.getTelefono().isEmpty() ? "No especificado" : usuario.getTelefono()));
         System.out.println("Dirección: " + (usuario.getDireccion().isEmpty() ? "No especificada" : usuario.getDireccion()));
@@ -127,7 +116,5 @@ public class registrarUsuario {
         System.out.print("\n¿Confirmar registro? (S/N): ");
         String respuesta = scanner.nextLine().trim().toUpperCase();
         return respuesta.equals("S");
-    }
-}
     }
 }
