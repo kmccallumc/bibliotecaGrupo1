@@ -4,6 +4,7 @@ package com.viu.bibliotecagrupo1.presentationLayer;
 
 import com.viu.bibliotecagrupo1.businessLayer.gestionLibros;
 import com.viu.bibliotecagrupo1.entitiyLayer.Libro;
+import java.util.List;
 
 import java.util.Scanner;
 
@@ -17,6 +18,7 @@ public class GestionLibrosUI {
     public void mostrarMenu() {
         while (true) {
             System.out.println("\n=== Gestión de Libros ===");
+            System.out.println("0. Listar libros");
             System.out.println("1. Agregar libro");
             System.out.println("2. Buscar libro");
             System.out.println("3. Actualizar libro");
@@ -26,6 +28,9 @@ public class GestionLibrosUI {
 
             String opcion = scanner.nextLine();
             switch (opcion) {
+                case "0":
+                    listarLibros();
+                    break;
                 case "1":
                     agregarLibro();
                     break;
@@ -46,6 +51,15 @@ public class GestionLibrosUI {
         }
     }
 
+    private void listarLibros() {
+        gestionLibros gestLib = new gestionLibros();
+        List<Libro> listaLib = gestLib.ListarLibros();
+        
+        for(Libro lib : listaLib ){
+            System.out.println(lib.toString());
+        }
+        
+    }
     private void agregarLibro() {
         System.out.println("\n=== Agregar Nuevo Libro ===");
         
@@ -69,7 +83,7 @@ public class GestionLibrosUI {
             Libro libNuevo;
             
             if (gestLib.validaLibro()){
-                libNuevo = gestLib.GuardaLibro();  
+                libNuevo = gestLib.InsertarLibro();  
                 if (libNuevo != null)
                     System.out.println("Libro agregado con éxito.");
                 else
@@ -110,17 +124,30 @@ public class GestionLibrosUI {
         System.out.print("Introduzca el ISBN del libro a actualizar: ");
         String isbn = scanner.nextLine();
         
-        // Se buscaría el libro y luego se permitiría su actualización
-        System.out.println("Introduzca los nuevos datos (deje en blanco para mantener el valor actual):");
+        gestionLibros gestLib = new gestionLibros();
+        System.out.println("Realizando búsqueda por ISBN");
+        Libro libroFound = gestLib.BuscarLibro("3", isbn);
+        if (libroFound !=null){
+            System.out.println("Introduzca los nuevos datos :");//(deje en blanco para mantener el valor actual)
         
-        System.out.print("Título: ");
-        String titulo = scanner.nextLine();
+            System.out.print("Título: ");
+            String titulo = scanner.nextLine();
         
-        System.out.print("Género: ");
-        String genero = scanner.nextLine();
+            System.out.print("Género: ");
+            String genero = scanner.nextLine();
         
-        // Llamada al servicio de la capa de negocio
-        System.out.println("Libro actualizado con éxito.");
+            // Llamada al servicio de la capa de negocio
+            // debria validar ciertas cosillas como que tengan valor, y genero valido, pero por ahora lo dejamos estar :)...
+            //gestLib.validaLibro();
+            libroFound.setTitulo(titulo);
+            libroFound.setGenero(genero);
+            gestLib.ActualizarLibro(libroFound);
+            
+            System.out.println("Libro actualizado con éxito.");
+        }else{
+            System.out.println("Libro no encontrado, volviendo al menu principal");
+        }
+
     }
 
     private void eliminarLibro() {
@@ -128,12 +155,21 @@ public class GestionLibrosUI {
         System.out.print("Introduzca el ISBN del libro a eliminar: ");
         String isbn = scanner.nextLine();
         
-        System.out.print("¿Está seguro? (S/N): ");
-        if (scanner.nextLine().equalsIgnoreCase("S")) {
-            // Llamada al servicio de la capa de negocio
-            System.out.println("Libro eliminado con éxito.");
-        } else {
-            System.out.println("Operación cancelada.");
+        gestionLibros gestLib = new gestionLibros();
+        System.out.println("Realizando búsqueda por ISBN");
+        Libro libroFound = gestLib.BuscarLibro("3", isbn);
+        
+        if (libroFound !=null){
+            System.out.print("¿Está seguro? (S/N): ");
+            if (scanner.nextLine().equalsIgnoreCase("S")) {
+                // Llamada al servicio de la capa de negocio
+                if (gestLib.EliminarLibro(libroFound.getLibroId()))
+                    System.out.println("Libro eliminado con éxito.");
+                else
+                    System.out.println("Error al eliminar libro.");
+            } else
+                System.out.println("Operación cancelada.");
         }
+        
     }
 }

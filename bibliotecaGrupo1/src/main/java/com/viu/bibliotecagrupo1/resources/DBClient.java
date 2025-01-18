@@ -111,16 +111,17 @@ public class DBClient {
     
             PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
             preparedStmt.setString (1, lib.getTitulo());
-            preparedStmt.setInt (2, lib.getAutor().getAutorid());
+            preparedStmt.setInt (2, lib.getAutorId());
             preparedStmt.setString (3, lib.getIsbn());
             preparedStmt.setBoolean(4, lib.isDisponible());
             preparedStmt.setString(5, lib.getGenero());
-            preparedStmt.setInt(6, lib.getLibroId());
+            preparedStmt.setInt(6, lib.getLibroId()); // el argumento
             preparedStmt.execute();
             isOK = true;
             
          }catch (SQLException  e) {
                 e.printStackTrace();
+                isOK = false;
         }
         return isOK;
     }
@@ -186,7 +187,7 @@ public class DBClient {
                 libroid = rs.getInt("libro_id");
                 titulo = rs.getString("titulo");
                 elautor = rs.getInt("autor_id");
-                isbn = rs.getString("titulo");
+                isbn = rs.getString("isbn");
                 disponible = rs.getBoolean("autor_id"); // los libros por defecto estan disponibles
                 genero = rs.getString("genero");
                                  

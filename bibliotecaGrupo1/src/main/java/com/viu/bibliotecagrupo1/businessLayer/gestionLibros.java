@@ -67,8 +67,8 @@ public class gestionLibros {
          return validacion;
      }
      
-     public Libro GuardaLibro(){
-         
+     public Libro InsertarLibro(){
+         //libro = lib;
          DBClient dbLib = new DBClient();
          if (dbLib.insertLibro(libro))
              return libro;
@@ -76,22 +76,53 @@ public class gestionLibros {
              return null;
      }
      
+      public boolean ActualizarLibro(Libro lib){
+         
+         DBClient dbLib = new DBClient();
+         return dbLib.updateLibro(lib);
+
+     }
+     
+     public boolean EliminarLibro(int libroid){
+         
+         DBClient dbLib = new DBClient();
+         return dbLib.deleteLibro(libroid);
+
+     }
+     
+     public List ListarLibros(){
+         
+         DBClient dbLib = new DBClient();
+         return dbLib.selectAllLibros();
+
+     }
+     
      public Libro BuscarLibro(String opcion, String termino){
          DBClient dbLib = new DBClient();
-         Libro elLibro;
+         Libro elLibro=null;
+         List lista;
          
          switch (opcion) {
-                case "1" -> // Por titulo
-                    elLibro = (Libro)(dbLib.selectLibroTitulo(termino).getFirst());
+                case "1" -> {// Por titulo
+                    lista = dbLib.selectLibroTitulo(termino);
+                    
+                    if (!lista.isEmpty())
+                        elLibro = (Libro)(lista.getFirst());
+                }
                 case "2" -> {
                     // por autor
                     List aut = dbLib.selectAutorByNombre(termino);
                     // por ahora recojo el primero de la lista
-                    Autor autor = (Autor)(aut.getFirst());
-                    elLibro = (Libro)(dbLib.selectLibroAutor(autor.getAutorid()).getFirst());
-                    }
-                case "3" -> // por ISBN
-                    elLibro = (Libro)(dbLib.selectLibroISBN(termino).getFirst());
+                    if (!aut.isEmpty()){
+                        Autor autor = (Autor)(aut.getFirst());
+                        elLibro = (Libro)(dbLib.selectLibroAutor(autor.getAutorid()).getFirst());
+                    }                    
+                }
+                case "3" -> { // por ISBN
+                    lista = dbLib.selectLibroISBN(termino);
+                     if (!lista.isEmpty())
+                        elLibro = (Libro)(lista.getFirst());
+                }
                 default -> elLibro = null;
          }
          
