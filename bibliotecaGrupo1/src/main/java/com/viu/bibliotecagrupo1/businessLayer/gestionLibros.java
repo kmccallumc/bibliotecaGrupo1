@@ -42,22 +42,28 @@ public class gestionLibros {
          DBClient dbLib = new DBClient();
          
          // 1. Valido ISBN
-         Libro otroLib = (Libro)(dbLib.selectLibroISBN(libro.getIsbn())).getFirst();
-         if(otroLib == null){
+         //Libro otroLib = (Libro)(dbLib.selectLibroISBN(libro.getIsbn())).getFirst();
+         if(dbLib.selectLibroISBN(libro.getIsbn()).isEmpty()){
              numValidaciones ++;
+             System.out.println("ISBN correcto, no existe");
          }
              
          // 2. Valido autor
          List aut = dbLib.selectAutorByNombre(nombreAutor);
-                    // por ahora recojo el primero de la lista
+                    // por ahora recojo el primero de la lista, 
          Autor autor = (Autor)(aut.getFirst());
          if (autor!= null){
              // si lo encuentro, guardo en this.autor
              this.autorid = autor.getAutorid();
+             System.out.println("Autor correcto: "+ this.autorid);
+             // añado el id del autor al objeto libro
+             libro.setAutorId(this.autorid);
              numValidaciones ++;
          }
-         if (numValidaciones ==2)
+         if (numValidaciones ==2){
              validacion = true;
+             System.out.println("Valiciones correctas, por autor y por isbn");
+         }
          return validacion;
      }
      

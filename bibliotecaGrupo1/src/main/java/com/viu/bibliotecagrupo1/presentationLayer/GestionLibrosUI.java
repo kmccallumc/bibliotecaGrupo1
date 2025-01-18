@@ -79,7 +79,7 @@ public class GestionLibrosUI {
                 System.out.println("Validacion con errores, porfavor verifique");
             }
                 
-            System.out.println("Libro agregado con éxito.");
+            //System.out.println("Libro agregado con éxito.");
         } catch (Exception e) {
             System.out.println("Error al agregar el libro: " + e.getMessage());
         }

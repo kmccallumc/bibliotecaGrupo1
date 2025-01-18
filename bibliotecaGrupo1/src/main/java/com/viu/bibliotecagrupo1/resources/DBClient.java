@@ -88,7 +88,7 @@ public class DBClient {
     
             PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
             preparedStmt.setString (1, lib.getTitulo());
-            preparedStmt.setInt (2, lib.getAutor().getAutorid());
+            preparedStmt.setInt (2, lib.getAutorId());
             preparedStmt.setString (3, lib.getIsbn());
             preparedStmt.setBoolean(4, lib.isDisponible());
             preparedStmt.setString(5, lib.getGenero());
@@ -157,7 +157,7 @@ public class DBClient {
 
     public List selectLibroISBN(String ISBN){
         // el ISBN puede devolver valios libros ???? o solo 1        
-        String sql = "select * from libro where titulo = '" + ISBN + "'";
+        String sql = "select * from libro where isbn = '" + ISBN + "'";
         return selectGenericoLibro(sql);
     }      
     
