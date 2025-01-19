@@ -118,14 +118,29 @@ public class GestionUsuariosUI {
         System.out.println("\n=== Actualizar Usuario ===");
         System.out.print("Introduzca el DNI del usuario a actualizar: ");
         String dni = scanner.nextLine();
-        
-        System.out.println("Introduzca los nuevos datos (deje en blanco para mantener el valor actual):");
-        
-        System.out.print("Email: ");
-        String email = scanner.nextLine();
-        
-        // Llamada al servicio de la capa de negocio
-        System.out.println("Usuario actualizado con éxito.");
+         try {
+            gestionUsuario gestUsu = new gestionUsuario();
+            Usuario usuBusca = gestUsu.BuscarUsuario("1", dni);
+            if(usuBusca != null){
+                System.out.println("Introduzca los nuevos datos (deje en blanco para mantener el valor actual):");
+
+                System.out.print("Direccion: ");
+                String direccion = scanner.nextLine();
+                usuBusca.setDireccion(direccion);
+
+                System.out.print("Telefono: ");
+                String telefono = scanner.nextLine();
+                usuBusca.setTelefono(telefono);          
+
+                // Llamada al servicio de la capa de negocio
+                gestUsu.ActualizarUsuario(usuBusca);
+
+                System.out.println("Usuario actualizado con éxito.");
+            }else
+                System.out.println("Usuario no existe, vuelva a intentarlo");
+         }catch (Exception e) {
+            System.out.println("Error al registrar usuario: " + e.getMessage());
+         }
     }
 
     private void eliminarUsuario() {

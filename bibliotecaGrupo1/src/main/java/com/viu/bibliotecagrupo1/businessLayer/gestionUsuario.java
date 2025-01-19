@@ -91,4 +91,11 @@ public class gestionUsuario {
          
          return elUsu;
      }
+    
+         public boolean ActualizarUsuario(Usuario usu){
+         
+         DBClient dbLib = new DBClient();
+         return dbLib.updateUsuario(usu);
+
+     }
 }

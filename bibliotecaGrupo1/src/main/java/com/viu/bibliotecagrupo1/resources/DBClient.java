@@ -238,7 +238,7 @@ public class DBClient {
         boolean isOK = false;
         try {
             connBiblio = ds.getConnection(USERDB, PASSDB);
-            String sql = "UPDATE Usuario set nombre = ?, apellidos= ?, dni= ?, email= ?, telefono=?, direccion = ?, fechaAlta = ? , activo= ?, numeroPrestamos=? where usuario_id = ?";
+            String sql = "UPDATE usuario set nombre = ?, apellidos= ?, dni= ?, email= ?, telefono=?, direccion = ?, fechaAlta = ? , activo= ?, numeroPrestamos=? where usuario_id = ?";
     
             PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
             preparedStmt.setString (1, usu.getNombre());
@@ -250,6 +250,7 @@ public class DBClient {
             preparedStmt.setDate (7, new java.sql.Date(usu.getFechaAlta().getTime()));
             preparedStmt.setInt(8, usu.getActivo());
             preparedStmt.setInt(9, usu.getNumeroPrestamos());
+            preparedStmt.setInt(10, usu.getId());
             
             preparedStmt.execute();
             isOK = true;
