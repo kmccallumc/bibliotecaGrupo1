@@ -148,12 +148,18 @@ public class GestionUsuariosUI {
         System.out.print("Introduzca el DNI del usuario a eliminar: ");
         String dni = scanner.nextLine();
         
-        System.out.print("¿Está seguro? (S/N): ");
-        if (scanner.nextLine().equalsIgnoreCase("S")) {
-            // Llamada al servicio de la capa de negocio
-            System.out.println("Usuario eliminado con éxito.");
-        } else {
-            System.out.println("Operación cancelada.");
-        }
+        gestionUsuario gestUsu = new gestionUsuario();
+        Usuario usuBusca = gestUsu.BuscarUsuario("1", dni);
+        if(usuBusca != null){
+            System.out.print("¿Está seguro? (S/N): ");
+            if (scanner.nextLine().equalsIgnoreCase("S")) {
+                // Llamada al servicio de la capa de negocio
+                gestUsu.EliminarUsuario(usuBusca.getId());
+                System.out.println("Usuario eliminado con éxito.");
+            } else {
+                System.out.println("Operación cancelada.");
+            }
+        }else
+            System.out.println("Usuario no encontrado");
     }
 }

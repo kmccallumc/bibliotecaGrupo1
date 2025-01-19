@@ -266,7 +266,7 @@ public class DBClient {
         boolean isOK = false;
         try {
             connBiblio = ds.getConnection(USERDB, PASSDB);
-            String sql = "DELETE from Usuario where usuario_id = ?";
+            String sql = "DELETE from usuario where usuario_id = ?";
             
             PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
             preparedStmt.setInt(1, usuarioid);

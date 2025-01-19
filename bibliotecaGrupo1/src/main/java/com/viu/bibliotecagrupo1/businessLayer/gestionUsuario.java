@@ -98,4 +98,12 @@ public class gestionUsuario {
          return dbLib.updateUsuario(usu);
 
      }
+         
+    public boolean EliminarUsuario(int usuarioId){
+         
+         DBClient dbLib = new DBClient();
+         return dbLib.deleteUsuario(usuarioId);
+
+     }
+
 }
