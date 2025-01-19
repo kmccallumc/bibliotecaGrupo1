@@ -294,6 +294,12 @@ public class DBClient {
         return usu;
     }      
     
+        public List selectAllUsuarios(){
+        // devuelve todos los libros
+        String querySelect = "select * from usuario";
+        return selectGenericoUsuario(querySelect);
+    }
+        
     private List selectGenericoUsuario(String sql){
         Usuario usu=null; 
         List listaUsuarios = new ArrayList(); 

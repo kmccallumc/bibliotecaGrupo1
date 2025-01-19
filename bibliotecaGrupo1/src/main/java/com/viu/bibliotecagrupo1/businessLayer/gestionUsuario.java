@@ -4,10 +4,23 @@
  */
 package com.viu.bibliotecagrupo1.businessLayer;
 
+import com.viu.bibliotecagrupo1.resources.DBClient;
+import java.util.List;
+
 /**
  *
  * @author kmccallum <Kathleen_McCallum VIU>
  */
 public class gestionUsuario {
     
+     public gestionUsuario(){
+    }
+     
+     public List ListarUsuarios(){
+         
+         DBClient dbLib = new DBClient();
+         return dbLib.selectAllUsuarios();
+
+     }
+     
 }

@@ -117,4 +117,19 @@ public class Usuario {
         this.numeroPrestamos = numeroPrestamos;
     }
 
+        @Override
+    public String toString() {
+        return "Usuario{" +
+                "nombre='" + nombre + '\'' +
+                ", apellidos=" + apellidos +
+                ", dni='" + dni + '\'' +
+                ", email=" + email +
+                ", telefono='" + telefono + '\'' +
+                ", direccion='" + direccion + '\'' +
+                ", fecha Alta='" + fechaAlta.toString() + '\'' +
+                ", activo='" + activo + '\'' +
+                ", numero de Prestamos='" + numeroPrestamos + '\'' +
+                '}';
+    }
+    
 }

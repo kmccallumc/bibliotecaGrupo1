@@ -1,5 +1,9 @@
 package com.viu.bibliotecagrupo1.presentationLayer;
 
+import com.viu.bibliotecagrupo1.businessLayer.gestionUsuario;
+import com.viu.bibliotecagrupo1.entitiyLayer.Usuario;
+import java.util.List;
+
 import java.util.Scanner;
 
 public class GestionUsuariosUI {
@@ -12,6 +16,7 @@ public class GestionUsuariosUI {
     public void mostrarMenu() {
         while (true) {
             System.out.println("\n=== Gestión de Usuarios ===");
+            System.out.println("0. Listar usuarios");
             System.out.println("1. Registrar usuario");
             System.out.println("2. Buscar usuario");
             System.out.println("3. Actualizar usuario");
@@ -21,6 +26,9 @@ public class GestionUsuariosUI {
 
             String opcion = scanner.nextLine();
             switch (opcion) {
+                case "0":
+                    listarUsuarios();
+                    break;
                 case "1":
                     registrarUsuario();
                     break;
@@ -41,6 +49,15 @@ public class GestionUsuariosUI {
         }
     }
 
+        private void listarUsuarios() {
+        gestionUsuario gestUsu = new gestionUsuario();
+        List<Usuario> listaUsu = gestUsu.ListarUsuarios();
+        
+        for(Usuario usu : listaUsu ){
+            System.out.println(usu.toString());
+        }
+        
+    }
     private void registrarUsuario() {
         System.out.println("\n=== Registrar Nuevo Usuario ===");
         try {
