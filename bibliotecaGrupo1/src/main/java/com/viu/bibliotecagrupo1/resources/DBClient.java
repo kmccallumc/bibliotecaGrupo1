@@ -211,7 +211,7 @@ public class DBClient {
         boolean isOK = false;
         try {
             connBiblio = ds.getConnection(USERDB, PASSDB);
-            String sql = "INSERT INTO Usuario (nombre, apellidos, dni, email, telefono, direccion, fechaAlta, activo, numeroPrestamos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            String sql = "INSERT INTO usuario (nombre, apellidos, dni, email, telefono, direccion, fechaAlta, activo, numeroPrestamos) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
     
             PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
             preparedStmt.setString (1, usu.getNombre());
@@ -280,17 +280,21 @@ public class DBClient {
     
     public Usuario selectUsuarioDNI(String dni){
         // el dni es unico
+        Usuario usu = null;
         String sql = "select * from usuario where dni = '" + dni + "'";
         List listaUsuarios = selectGenericoUsuario(sql);
-        Usuario usu = (Usuario)listaUsuarios.getFirst();
+        if ( !listaUsuarios.isEmpty())
+            usu  = (Usuario)listaUsuarios.getFirst();
         return usu;
     }      
 
     public Usuario selectUsuarioEmail(String email){
         // el email deberia ser unico, asi que traigo el primero
-        String sql = "select * from libro where email = " + email + "'";
+        Usuario usu = null;
+        String sql = "select * from usuario where email = '" + email + "'";
         List listaUsuarios = selectGenericoUsuario(sql);
-        Usuario usu = (Usuario)listaUsuarios.getFirst();       
+        if ( !listaUsuarios.isEmpty())
+            usu = (Usuario)listaUsuarios.getFirst();       
         return usu;
     }      
     

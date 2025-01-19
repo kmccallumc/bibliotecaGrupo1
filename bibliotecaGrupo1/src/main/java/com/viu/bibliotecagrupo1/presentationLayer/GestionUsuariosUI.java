@@ -73,8 +73,27 @@ public class GestionUsuariosUI {
             System.out.print("Email: ");
             String email = scanner.nextLine();
             
-            // Llamada al servicio de la capa de negocio
-            System.out.println("Usuario registrado con éxito.");
+            System.out.print("Telefono: ");
+            String telefono = scanner.nextLine();
+            
+            System.out.print("Direccion: ");
+            String direccion = scanner.nextLine();
+            
+            gestionUsuario gestUsu = new gestionUsuario(nombre, apellidos, dni, email, telefono, direccion);
+            Usuario usuNuevo;
+            
+            System.out.println("Valido usuario");
+            if (gestUsu.validaUsuario()){
+                usuNuevo = gestUsu.InsertarUsuario();  
+                if (usuNuevo != null)
+                    System.out.println("Usuario agregado con éxito.");
+                else
+                    System.out.println("No se guardo el usuario, fallo al guardar");
+            }
+            else{
+                System.out.println("Validacion con errores, porfavor verifique");
+            }
+               
         } catch (Exception e) {
             System.out.println("Error al registrar usuario: " + e.getMessage());
         }

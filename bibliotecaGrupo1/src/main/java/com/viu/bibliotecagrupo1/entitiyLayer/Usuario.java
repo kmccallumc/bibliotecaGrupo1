@@ -24,6 +24,9 @@ public class Usuario {
     private int numeroPrestamos;
     private static final int MAX_PRESTAMOS = 3;
 
+    public Usuario (){
+    }
+    
     /* no se cuanto poner de max de prestamo?? 3? 4?     */
     public Usuario(int id, String nombre, String apellidos, String dni, String email, String telefono, String direccion, Date fechaAlta, int activo, int numeroPrestamos) {
         this.id = id;
