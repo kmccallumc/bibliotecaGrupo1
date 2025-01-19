@@ -103,9 +103,15 @@ public class GestionUsuariosUI {
         System.out.println("\n=== Buscar Usuario ===");
         System.out.print("Introduzca el DNI del usuario: ");
         String dni = scanner.nextLine();
+        gestionUsuario gestUsu = new gestionUsuario();
         
-        // Llamada al servicio de la capa de negocio
         System.out.println("Realizando búsqueda...");
+        Usuario usuBusca = gestUsu.BuscarUsuario("1", dni);
+        if(usuBusca != null)
+            System.out.println(usuBusca.toString());
+        else
+            System.out.println("Usuario no encontrado");
+        
     }
 
     private void actualizarUsuario() {

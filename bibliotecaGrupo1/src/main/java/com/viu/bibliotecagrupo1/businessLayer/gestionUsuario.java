@@ -74,4 +74,21 @@ public class gestionUsuario {
          else
              return null;
      }
+          
+    public Usuario BuscarUsuario(String opcion, String termino){
+         DBClient dbLib = new DBClient();
+         Usuario elUsu;
+         
+         switch (opcion) {
+                case "1" -> {// Por dni
+                    elUsu = dbLib.selectUsuarioDNI(termino);                   
+                }
+                case "2" -> {// por email - no implementado
+                    elUsu = dbLib.selectUsuarioEmail(termino); 
+                }
+                default -> elUsu = null;
+         }
+         
+         return elUsu;
+     }
 }
