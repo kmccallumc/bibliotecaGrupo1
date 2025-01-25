@@ -12,12 +12,16 @@ import java.util.Scanner;
 public class MenuPrincipal {
     private final GestionLibrosUI gestionLibrosUI;
     private final GestionUsuariosUI gestionUsuariosUI;
+    private final GestionEcommerceUI gestionEcommerceUI;
+    
     private final Scanner scanner;
 
     public MenuPrincipal() {
         this.gestionLibrosUI = new GestionLibrosUI();
         this.gestionUsuariosUI = new GestionUsuariosUI();
+        this.gestionEcommerceUI = new GestionEcommerceUI();
         this.scanner = new Scanner(System.in);
+        
     }
 
     public void mostrarMenu() {
@@ -25,7 +29,8 @@ public class MenuPrincipal {
             System.out.println("\n=== Sistema de Gestión de Biblioteca ===");
             System.out.println("1. Gestión de Libros");
             System.out.println("2. Gestión de Usuarios");
-            System.out.println("3. Salir");
+            System.out.println("3. Venta de Libros");
+            System.out.println("5. Salir");
             System.out.print("\nSeleccione una opción: ");
 
             String opcion = scanner.nextLine();
@@ -37,6 +42,9 @@ public class MenuPrincipal {
                     gestionUsuariosUI.mostrarMenu();
                     break;
                 case "3":
+                    gestionEcommerceUI.mostrarMenu();
+                    break;
+                case "5":
                     System.out.println("¡Hasta pronto!");
                     return;
                 default:

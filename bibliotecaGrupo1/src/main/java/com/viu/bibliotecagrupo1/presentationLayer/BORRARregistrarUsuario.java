@@ -10,11 +10,11 @@ import java.util.Date;
  * @author kmccallum <Kathleen_McCallum VIU>
  */
 
-public class registrarUsuario {
+public class BORRARregistrarUsuario {
     private final Scanner scanner;
     private static int ultimoId = 0;
     
-    public registrarUsuario() {
+    public BORRARregistrarUsuario() {
         this.scanner = new Scanner(System.in);
     }
     

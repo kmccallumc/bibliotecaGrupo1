@@ -477,4 +477,44 @@ public class DBClient {
         return listaAutores;
     }
  
+     /* ******************************************************
+      * Ventas
+      * ****************************************************** */
+    public List selectAllVentas(){
+        List listaVentas = new ArrayList();
+        String querySelect = "select * from ventas";
+        String nombreautor, apellidoautor, sexo, nacionalidad,biografia ;
+        int elautor;
+        Date fechanacimiento;
+        
+        inicializaDS();
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            Statement insertaQ = connBiblio.createStatement();
+            ResultSet rs = insertaQ.executeQuery(querySelect);
+            
+           while (rs.next()) {
+               
+               // TODO --- CAMBIAR
+               
+                // Retrieve by column name 
+                nombreautor = rs.getString("nombreAutor");
+                apellidoautor = rs.getString("apellidoAutor");
+                 sexo = rs.getString("sexo");
+                fechanacimiento = rs.getDate("fechaNacimiento");
+                nacionalidad = rs.getString("nationality");
+                biografia = rs.getString("biografia");
+                elautor = rs.getInt("autor_id");
+
+                Autor aut = new Autor(nombreautor, apellidoautor, new java.util.Date(fechanacimiento.getTime()), sexo, nacionalidad, biografia, elautor);
+                listaVentas.add(aut);
+            }
+            
+         }catch (SQLException  e) {
+             System.out.println(e.getErrorCode());
+             System.out.println(e.getLocalizedMessage() );
+                e.printStackTrace();
+         }
+        return listaVentas;
+    }
 }
