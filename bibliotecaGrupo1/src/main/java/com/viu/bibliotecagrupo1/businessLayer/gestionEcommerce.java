@@ -22,5 +22,11 @@ public class gestionEcommerce {
          return dbLib.selectAllVentas();
 
      }
+       
+       public List consultaVenta(int numVenta){
+           
+            DBClient dbLib = new DBClient();
+            return dbLib.selectVenta(numVenta);
+       }
      
 }

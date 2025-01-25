@@ -18,6 +18,7 @@ import java.sql.Date;
 import com.viu.bibliotecagrupo1.entitiyLayer.Libro;
 import com.viu.bibliotecagrupo1.entitiyLayer.Autor;
 import com.viu.bibliotecagrupo1.entitiyLayer.Usuario;
+import com.viu.bibliotecagrupo1.entitiyLayer.Venta;
 import java.util.List;
 import java.util.ArrayList;
 import software.amazon.jdbc.ds.AwsWrapperDataSource;
@@ -483,9 +484,10 @@ public class DBClient {
     public List selectAllVentas(){
         List listaVentas = new ArrayList();
         String querySelect = "select * from ventas";
-        String nombreautor, apellidoautor, sexo, nacionalidad,biografia ;
-        int elautor;
-        Date fechanacimiento;
+        
+        int ventaid, usuarioid;
+        float valorTotal;
+        Date fechaventa;
         
         inicializaDS();
         try {
@@ -494,20 +496,51 @@ public class DBClient {
             ResultSet rs = insertaQ.executeQuery(querySelect);
             
            while (rs.next()) {
-               
-               // TODO --- CAMBIAR
-               
                 // Retrieve by column name 
-                nombreautor = rs.getString("nombreAutor");
-                apellidoautor = rs.getString("apellidoAutor");
-                 sexo = rs.getString("sexo");
-                fechanacimiento = rs.getDate("fechaNacimiento");
-                nacionalidad = rs.getString("nationality");
-                biografia = rs.getString("biografia");
-                elautor = rs.getInt("autor_id");
+                ventaid = rs.getInt("venta_id");
+                fechaventa = rs.getDate("fechaVenta");
+                valorTotal = rs.getFloat("valorTotal");
+                usuarioid = rs.getInt("usuario_id");
 
-                Autor aut = new Autor(nombreautor, apellidoautor, new java.util.Date(fechanacimiento.getTime()), sexo, nacionalidad, biografia, elautor);
-                listaVentas.add(aut);
+                Venta ven = new Venta(ventaid, new java.util.Date(fechaventa.getTime()), usuarioid, valorTotal);
+                listaVentas.add(ven);
+            }
+            
+         }catch (SQLException  e) {
+             System.out.println(e.getErrorCode());
+             System.out.println(e.getLocalizedMessage() );
+                e.printStackTrace();
+         }
+        return listaVentas;
+    }
+    
+       public List selectVenta(int numVenta){
+        List listaVentas = new ArrayList();
+        int ventaid, usuarioid, ventaitem, libroid;
+        float valorTotal,precioVentaLibro;
+        Date fechaventa;
+        String querySelect = "select v.venta_id, v.fechaVenta, v.usuario_id, v.valorTotal, venta_item, libro_id, precioVentaLibro\n" +
+                             "from ventas v\n" +
+                             "join ventas_detalle vd on v.venta_id = vd.venta_id\n" +
+                             "where v.venta_id = " +numVenta +";";
+       
+        inicializaDS();
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            Statement insertaQ = connBiblio.createStatement();
+            ResultSet rs = insertaQ.executeQuery(querySelect);
+            
+           while (rs.next()) {
+                // Retrieve by column name 
+                ventaid = rs.getInt("venta_id");
+                fechaventa = rs.getDate("fechaVenta");
+                valorTotal = rs.getFloat("valorTotal");
+                usuarioid = rs.getInt("usuario_id");
+                ventaitem = rs.getInt("venta_item");
+                libroid = rs.getInt("libro_id");
+                precioVentaLibro = rs.getFloat("precioVentaLibro");
+                Venta ven = new Venta(ventaid, new java.util.Date(fechaventa.getTime()), usuarioid, valorTotal, ventaitem, libroid, precioVentaLibro);
+                listaVentas.add(ven);
             }
             
          }catch (SQLException  e) {
