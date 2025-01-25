@@ -550,4 +550,56 @@ public class DBClient {
          }
         return listaVentas;
     }
+       
+    public int InsertVenta(Venta ven){
+        inicializaDS();
+        boolean isOK = false;
+        int ventaKey=0;
+        ResultSet rs;
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            String sql = "INSERT INTO ventas (fechaVenta, usuario_id, valorTotal) VALUES (?, ?, ?)";
+    
+            PreparedStatement preparedStmt = connBiblio.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            
+            preparedStmt.setDate (1, new java.sql.Date(System.currentTimeMillis()));
+            preparedStmt.setInt (2, ven.getUsuarioid());
+            preparedStmt.setFloat(3, ven.getValorTotal());
+            preparedStmt.execute();
+            
+            rs= preparedStmt.getGeneratedKeys();
+            while (rs.next())
+                ventaKey = rs.getInt(1);
+            isOK = true;
+            
+         }catch (SQLException  e) {
+                e.printStackTrace();
+        }
+        return ventaKey;
+    }
+    
+       public boolean InsertDetalleVenta(Venta ven, int libros[], float precios[]){
+        inicializaDS();
+        boolean isOK = false;
+        
+        try {
+            connBiblio = ds.getConnection(USERDB, PASSDB);
+            int contador = libros.length;
+            for(int i=0; i<contador; i++){
+                String sql = "INSERT INTO ventas_detalle (venta_id, venta_item, libro_id, precioVentaLibro) VALUES(?,?,?,?)";
+                PreparedStatement preparedStmt = connBiblio.prepareStatement(sql);
+                preparedStmt.setInt (1, ven.getVentaid());
+                preparedStmt.setInt (2, i);
+                preparedStmt.setInt (3, libros[i]);
+                preparedStmt.setFloat(4, precios[i]);
+
+                preparedStmt.execute();
+            }
+            isOK = true;
+            
+         }catch (SQLException  e) {
+                e.printStackTrace();
+        }
+        return isOK;
+    }
 }

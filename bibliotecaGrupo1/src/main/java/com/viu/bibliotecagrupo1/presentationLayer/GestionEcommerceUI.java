@@ -1,5 +1,7 @@
 package com.viu.bibliotecagrupo1.presentationLayer;
 import com.viu.bibliotecagrupo1.businessLayer.gestionEcommerce;
+import com.viu.bibliotecagrupo1.businessLayer.gestionLibros;
+import com.viu.bibliotecagrupo1.entitiyLayer.Libro;
 import com.viu.bibliotecagrupo1.entitiyLayer.Venta;
 import java.util.List;
 
@@ -34,7 +36,7 @@ public class GestionEcommerceUI {
                     consultarVenta();
                     break;
                 case "2":
-                    //();
+                    venderLibro();
                     break;
                 case "5":
                     return;
@@ -80,40 +82,80 @@ public class GestionEcommerceUI {
             System.out.println("Error en id de venta : " + e.getMessage());
         }catch (Exception e) {
             System.out.println("Error al buscar venta: " + e.getMessage());
-       
-        
-    }
-        
-   // private void venderLibro() {
-     //   gestionEcommerce gestVen = new gestionEcommerce();
-        /*
-        System.out.println("\n=== Venta de libros de la Biblioteca ===");
-        
-        System.out.print("Buscar libro que no este en pretamo: ");
-        String venta = scanner.nextLine();
-        
-        try {
-            List<Venta> listaVen = gestVen.nuevaVenta();
-            gestionLibros gestLib = new gestionLibros(titulo, isbn, genero, nombreAutor, apellidosAutor);
-            Libro libNuevo;
-            
-            if (gestLib.validaLibro()){
-                libNuevo = gestLib.InsertarLibro();  
-                if (libNuevo != null)
-                    System.out.println("Libro agregado con éxito.");
-                else
-                    System.out.println("No se guardo el libro, fallo al guardar");
-            }
-            else{
-                System.out.println("Validacion con errores, porfavor verifique");
-            }
-                
-            //System.out.println("Libro agregado con éxito.");
-        } catch (Exception e) {
-            System.out.println("Error al agregar el libro: " + e.getMessage());
         }
-        */
+     }
         
+    private void venderLibro() {
+        System.out.println("\n=== Venta de libros de la Biblioteca ===");
+        // la idea es buscar el libro e ir añadiendo al pedido
+       // System.out.print("Buscar libro que no este en pretamo: ");
+        try {
+            System.out.print("Usuario Id: ");
+            String usuarioId = scanner.nextLine();
+            
+            int librosid[] = new int[5];
+            float precioVenta[] = new float[5];
+            int contadorLibros = 0;
+            String opcion = "s";
+            boolean pregunto = true;
+            while (pregunto ) {
+                System.out.print("Añadir Libro? (maximo 5)");
+                System.out.println("S (si) / N (no)" );
+                opcion = scanner.nextLine();
+                
+                // aqui falta validar que el libro no este en alquiler
+                switch (opcion.toLowerCase()) {
+                    case "s" -> {
+                        if (contadorLibros==5){
+                            pregunto=false;
+                            break;
+                        }else{
+                            System.out.print("Introdusca el ISBN del libro: ");
+                            String libroid = scanner.nextLine();
+                            gestionLibros gestLib = new gestionLibros();
+                            System.out.println("Realizando búsqueda...");
+                            Libro libroFound = gestLib.BuscarLibro("3", libroid); // buscar por ISBN opcion 3
+                            if (libroFound!=null){
+                                System.out.print("Precio venta libro: ");
+                                float precioVentaind = scanner.nextFloat();
+
+                                librosid[contadorLibros] = libroFound.getLibroId();
+                                precioVenta[contadorLibros] = precioVentaind;
+                                System.out.println("libro encontrado ");
+                                contadorLibros ++;  
+
+                            }else
+                               System.out.println("Libro no encotrado"); 
+                            break;
+                        }
+                    }
+                    case "n" -> {
+                        pregunto=false;
+                        System.out.println("Listo, venta en marcha"); 
+                        break;
+                    }
+                    //default -> System.out.println("Opción no válida");
+                }
+            }
+            System.out.println("contador libros: " + contadorLibros); 
+            // solo hago venta si hay algun libro :)
+            if (contadorLibros >0){
+                gestionEcommerce gestVen = new gestionEcommerce();
+
+                // calculo monto total, inserto venta, y luego inserto libros
+                if (gestVen.validaVenta(contadorLibros, librosid, precioVenta)){
+                    Venta laventa = gestVen.creaVenta(contadorLibros, librosid, precioVenta);
+                    if (laventa!= null)
+                        System.out.println("Venta con id " +laventa.getVentaid() + " realizada con éxito." );
+                    else
+                        System.out.println("No se guardo la venta, fallo al guardar");
+                }
+            }
+            else
+               System.out.println("Venta no realizada."); 
+        } catch (Exception e) {
+            System.out.println("Error al crear la venta: " + e.getMessage());
+        }       
     } 
         
 }
